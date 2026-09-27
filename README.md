@@ -46,7 +46,21 @@ Alertmanager routes these alerts to the Telegram bot:
 ### 3. Airflow Orchestration
 
 Airflow DAGs running the pipelines and health checks:
-![Airflow](screenshots/airflow.png)
+
+**Login**:
+![Airflow login](screenshots/airflow_login.png)
+
+**DAG list**:
+![Airflow DAG list](screenshots/airflow_dags_list.png)
+
+**service_health_check**:
+![service_health_check](screenshots/airflow_service_health_check_grid.png)
+
+**drift_monitoring**:
+![drift_monitoring](screenshots/airflow_drift_monitoring_grid.png)
+
+**model_retrain**:
+![model_retrain](screenshots/airflow_model_retrain_grid.png)
 
 ### 4. MLflow Model Registry
 
