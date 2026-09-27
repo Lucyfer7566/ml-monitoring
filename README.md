@@ -27,24 +27,30 @@ A production-ready machine learning monitoring system using MLFlow, Prometheus, 
 
 ## 📸 Evidence
 
-Captured on 2026-09-27 against the running stack (docker compose up -d).
+Captured against the running stack (docker compose up -d).
 
-### Alerts received in Telegram
+### 1. Alerts received in Telegram
+*(Lưu ý: Bạn hãy tự chụp ảnh màn hình ứng dụng Telegram của bạn tại Group/ChatID -5263098451 sau khi chạy test và thay thế file screenshots/telegram_alert.png nhé)*
 
-Messages received by the MLOps bot in the **ML** group while running the simulation tests.
+![Telegram alerts](screenshots/telegram_alert_1.png)
 
-![Telegram alerts - Health check, Airflow Retrain, and Drift Detection](screenshots/telegram_alert_1.png)
+### 2. Prometheus → Alertmanager
 
-![Telegram alerts - Drift Detected in specific format](screenshots/telegram_alert_2.png)
+Prometheus captures metrics and triggers alerts when thresholds are met (e.g. APIDown, DriftDetected):
+![Prometheus](screenshots/prometheus.png)
 
-| Message | Source | How it was triggered |
-|---------|--------|----------------------|
-| [HEALTH CHECK] 2/3 service down | Airflow service_health_check | API and MLflow were not reachable from Airflow |
-| [FIRING:1] / [RESOLVED] EvidentlyServiceRestarted | Prometheus → Alertmanager | Evidently container restarted |
-| [RETRAIN] Model promoted to Production | Airflow model_retrain | Triggered by drift_monitoring DAG |
-| [AIRFLOW] Task failed (quality_gate) | Airflow on_failure_callback | Quality gate condition not met |
-| [RESOLVED] CRITICAL · api – APIDown | Prometheus → Alertmanager | API container stopped then restarted |
-| [DRIFT] Data drift detected | Simulator script | Drift simulator ran python run_simulation.py -n 2 -s severe_drift --analyze |
+Alertmanager routes these alerts to the Telegram bot:
+![Alertmanager](screenshots/alertmanager.png)
+
+### 3. Airflow Orchestration
+
+Airflow DAGs running the pipelines and health checks:
+![Airflow](screenshots/airflow.png)
+
+### 4. MLflow Model Registry
+
+Models tracked and registered via MLflow:
+![MLflow](screenshots/mlflow.png)
 
 
 ---
