@@ -1,0 +1,127 @@
+api:
+  prediction_url: http://localhost:8000/predict
+  health_url: http://localhost:8000/health
+  evidently_capture_url: http://localhost:8001/capture
+  evidently_analyze_url: http://localhost:8001/analyze
+model:
+  name: wine_quality_model
+  version: '1'
+  feature_count: 13
+features:
+  alcohol:
+    min: 11.03
+    max: 14.83
+    mean: 13.0
+    std: 0.81
+  malic_acid:
+    min: 0.74
+    max: 5.8
+    mean: 2.34
+    std: 1.11
+  ash:
+    min: 1.36
+    max: 3.23
+    mean: 2.37
+    std: 0.27
+  alcalinity_of_ash:
+    min: 10.6
+    max: 30.0
+    mean: 19.49
+    std: 3.33
+  magnesium:
+    min: 70.0
+    max: 162.0
+    mean: 99.74
+    std: 14.24
+  total_phenols:
+    min: 0.98
+    max: 3.88
+    mean: 2.3
+    std: 0.62
+  flavanoids:
+    min: 0.34
+    max: 5.08
+    mean: 2.03
+    std: 1.0
+  nonflavanoid_phenols:
+    min: 0.13
+    max: 0.66
+    mean: 0.36
+    std: 0.12
+  proanthocyanins:
+    min: 0.41
+    max: 3.58
+    mean: 1.59
+    std: 0.57
+  color_intensity:
+    min: 1.28
+    max: 13.0
+    mean: 5.06
+    std: 2.31
+  hue:
+    min: 0.48
+    max: 1.71
+    mean: 0.96
+    std: 0.23
+  od280_od315_of_diluted_wines:
+    min: 1.27
+    max: 4.0
+    mean: 2.61
+    std: 0.71
+  proline:
+    min: 278.0
+    max: 1680.0
+    mean: 746.89
+    std: 314.02
+  quality:
+    min: 0
+    max: 2
+    mean: 1.0
+    std: 0.5
+scenarios:
+  normal:
+    description: Normal traffic without drift
+    drift_multiplier: 1.0
+    noise_level: 0.1
+  slight_drift:
+    description: Slight drift in 2-3 features
+    drift_multiplier: 1.2
+    noise_level: 0.15
+    affected_features: 2
+  moderate_drift:
+    description: Moderate drift in 3-5 features
+    drift_multiplier: 1.5
+    noise_level: 0.2
+    affected_features: 4
+  severe_drift:
+    description: Severe drift in most features
+    drift_multiplier: 2.0
+    noise_level: 0.3
+    affected_features: 7
+  sudden_shift:
+    description: Sudden distribution shift
+    drift_multiplier: 2.5
+    noise_level: 0.4
+    affected_features: 10
+traffic:
+  burst:
+    requests_per_second: 10
+    duration_seconds: 60
+    description: High traffic burst
+  steady:
+    requests_per_second: 2
+    duration_seconds: 300
+    description: Steady traffic flow
+  gradual:
+    start_rps: 1
+    end_rps: 10
+    duration_seconds: 180
+    description: Gradually increasing traffic
+defaults:
+  requests_per_second: 2
+  duration_seconds: 60
+  scenario: normal
+  capture_to_evidently: true
+  analyze_after_completion: true
+  show_progress: true
+  log_level: INFO
