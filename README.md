@@ -47,20 +47,17 @@ Alertmanager routes these alerts to the Telegram bot:
 
 Airflow DAGs running the pipelines and health checks:
 
-**Login**:
+**Login** – admin user created by init:
 ![Airflow login](screenshots/airflow_login.png)
 
-**DAG list**:
+**DAG list** – the DAGs are loaded, unpaused, no import errors; ml_monitoring_health_check and ml_training_pipeline run on schedule:
 ![Airflow DAG list](screenshots/airflow_dags_list.png)
 
-**service_health_check**:
-![service_health_check](screenshots/airflow_service_health_check_grid.png)
+**ml_monitoring_health_check** – scheduled runs every 15 minutes (red runs = API/MLflow were down at that time and a Telegram alert was sent; green = all services healthy):
+![service_health_check runs](screenshots/airflow_health_check_grid.png)
 
-**drift_monitoring**:
-![drift_monitoring](screenshots/airflow_drift_monitoring_grid.png)
-
-**model_retrain**:
-![model_retrain](screenshots/airflow_model_retrain_grid.png)
+**ml_training_pipeline** – Handles data drift detection and model retraining. Intentional failures (red tasks) such as quality_gate represent conditions where accuracy did not meet the required threshold:
+![model_retrain](screenshots/airflow_training_pipeline_grid.png)
 
 ### 4. MLflow Model Registry
 
@@ -578,8 +575,8 @@ These alerts can be wired to Alertmanager / Slack / email as needed.
 
 Airflow manages the scheduled data pipeline operations and integrates the retraining processes.
 - **DAGs:**
-  - model_retrain: Automatically trains the model, logs it into MLFlow, and registers it.
-  - drift_monitoring: Triggered when drift is detected.
+  - ml_training_pipeline: Automatically trains the model, logs it into MLFlow, and registers it. Also handles drift detection triggers.
+  - ml_monitoring_health_check: Periodically verifies API and MLflow services are healthy.
 - **Access Airflow UI**: http://localhost:8080 (admin/admin)
 
 ---
