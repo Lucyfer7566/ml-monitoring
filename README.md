@@ -30,9 +30,10 @@ A production-ready machine learning monitoring system using MLFlow, Prometheus, 
 Captured against the running stack (docker compose up -d).
 
 ### 1. Alerts received in Telegram
-*(Lưu ý: Bạn hãy tự chụp ảnh màn hình ứng dụng Telegram của bạn tại Group/ChatID -5263098451 sau khi chạy test và thay thế file screenshots/telegram_alert.png nhé)*
 
-![Telegram alerts](screenshots/telegram_alert_1.png)
+![Telegram alerts 1](screenshots/telegram_alert_1.png)
+
+![Telegram alerts 2](screenshots/telegram_alert_2.png)
 
 ### 2. Prometheus → Alertmanager
 
